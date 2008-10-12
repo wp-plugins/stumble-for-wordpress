@@ -5,11 +5,11 @@ Plugin Name: Stumble! For WordPress
 Plugin URI: http://making-the-web.com/stumble-for-wordpress/
 Description: Adds "random article" functionality to Wordpress, similar to StumbleUpon and Wikipedia's random article feature
 Author: Brendon Boshell
-Version: 0.1
+Version: 0.1.1
 Author URI: http://making-the-web.com
 */
 
-$_stumble_version          = "0.1";
+$_stumble_version          = "0.1.1";
 $GLOBALS['_stumble_table'] = $GLOBALS['wpdb']->prefix . "stumble"; // Wordpress wouldn't put these in the global space for me when activating :(
 $_stumble_hasOptions       = false;
 $_stumble_favour           = array('comments' => array(400, 50, 50));
