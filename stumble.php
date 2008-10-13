@@ -5,11 +5,11 @@ Plugin Name: Stumble! For WordPress
 Plugin URI: http://making-the-web.com/stumble-for-wordpress/
 Description: Adds "random article" functionality to Wordpress, similar to StumbleUpon and Wikipedia's random article feature
 Author: Brendon Boshell
-Version: 0.1
+Version: 0.1.2
 Author URI: http://making-the-web.com
 */
 
-$_stumble_version          = "0.1";
+$_stumble_version          = "0.1.2";
 $GLOBALS['_stumble_table'] = $GLOBALS['wpdb']->prefix . "stumble"; // Wordpress wouldn't put these in the global space for me when activating :(
 $_stumble_hasOptions       = false;
 $_stumble_favour           = array('comments' => array(400, 50, 50));
@@ -469,6 +469,8 @@ function _stumble_stumble($int = false) {
 
 function _stumble_auto($data) {
 	global $post;
+	
+	if(!is_single()) return $data;
 
 	$button = '<div align="center" style="padding: 20px 5px;"><a href="'.get_bloginfo('url').'/?stumble='.$post->ID.'"><img src="'.get_bloginfo('url').'/wp-content/plugins/'.dirname(plugin_basename(__FILE__)).'/liked.png" border="0" width="300" height="92" alt="'.__("Liked this article? Read another similar article.", 'stumble').'" /></a>'.(get_option('_stumble_support') ? '<br /><small><a href="http://making-the-web.com/stumble-for-wordpress/">Powered by Stumble! for WordPress</a></small>' : '').'</div>';
 	
@@ -531,9 +533,10 @@ function _stumble_yarpp() {
 	$optvals['type'] = 'post';
 	
 	// Primary SQL query
-	
-    $results = $wpdb->get_results(yarpp_sql($optvals));
-    $output = '';
+	if(get_option('yarpp_version') >= 2.1)
+   		$results = $wpdb->get_results(yarpp_sql(array('post'), array(), true));
+	else
+		$results = $wpdb->get_results(yarpp_sql($optvals));
     
 	return $results;
 } /* _stumble_yarpp() */
