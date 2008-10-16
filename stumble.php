@@ -5,11 +5,11 @@ Plugin Name: Stumble! For WordPress
 Plugin URI: http://making-the-web.com/stumble-for-wordpress/
 Description: Adds "random article" functionality to Wordpress, similar to StumbleUpon and Wikipedia's random article feature
 Author: Brendon Boshell
-Version: 0.1
+Version: 0.1.3
 Author URI: http://making-the-web.com
 */
 
-$_stumble_version          = "0.1";
+$_stumble_version          = "0.1.2";
 $GLOBALS['_stumble_table'] = $GLOBALS['wpdb']->prefix . "stumble"; // Wordpress wouldn't put these in the global space for me when activating :(
 $_stumble_hasOptions       = false;
 $_stumble_favour           = array('comments' => array(400, 50, 50));
@@ -54,6 +54,23 @@ function _stumble_options_panel() {
 	<div class="wrap">
 		
 		<h2><?php _e("Stumble! for WordPress", 'stumble'); ?></h2>
+		
+		<div style="float: right; background: #FFFFFF; width: 250px; padding: 10px; border: 1px solid #999999; margin: 5px;">
+		
+		<h4 style="margin: 0;"><?php _e("Special thanks to...", 'stumble'); ?></h4>
+		
+		<p><?php _e("Thanks to the following people who have recently donated.", 'stumble'); ?></p>
+		
+		<p><iframe width="240" frameborder="0" height="150" src="http://making-the-web.com/links/?l=stumble"></iframe></p>
+		
+		<p><form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="491437">
+<input type="image" src="https://www.paypal.com/en_GB/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="">
+<img alt="" border="0" src="https://www.paypal.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+</form></p>
+		
+		</div>
 		
 		<p><?php _e("Disclaimer: This plugin is not associated with <a href=\"http://www.stumbleupon.com/\">StumbleUpon</a>.", 'stumble'); ?></p>
 		
@@ -469,6 +486,8 @@ function _stumble_stumble($int = false) {
 
 function _stumble_auto($data) {
 	global $post;
+	
+	if(!is_single()) return $data;
 
 	$button = '<div align="center" style="padding: 20px 5px;"><a href="'.get_bloginfo('url').'/?stumble='.$post->ID.'"><img src="'.get_bloginfo('url').'/wp-content/plugins/'.dirname(plugin_basename(__FILE__)).'/liked.png" border="0" width="300" height="92" alt="'.__("Liked this article? Read another similar article.", 'stumble').'" /></a>'.(get_option('_stumble_support') ? '<br /><small><a href="http://making-the-web.com/stumble-for-wordpress/">Powered by Stumble! for WordPress</a></small>' : '').'</div>';
 	
@@ -531,9 +550,10 @@ function _stumble_yarpp() {
 	$optvals['type'] = 'post';
 	
 	// Primary SQL query
-	
-    $results = $wpdb->get_results(yarpp_sql($optvals));
-    $output = '';
+	if(get_option('yarpp_version') >= 2.1)
+   		$results = $wpdb->get_results(yarpp_sql(array('post'), array(), true));
+	else
+		$results = $wpdb->get_results(yarpp_sql($optvals));
     
 	return $results;
 } /* _stumble_yarpp() */
