@@ -1,0 +1,93 @@
+msgid "Stumble! for WordPress"
+msgstr ""
+
+msgid "Special thanks to..."
+msgstr ""
+
+msgid "Thanks to the following people who have recently donated."
+msgstr ""
+
+msgid "Disclaimer: This plugin is not associated with <a href=\"http://www.stumbleupon.com/\">StumbleUpon</a>."
+msgstr ""
+
+msgid "Your settings have been updated."
+msgstr ""
+
+msgid "Favouring"
+msgstr ""
+
+msgid "The options below specify how a factor will 'weigh' on an article's probability of being stumbled. For example, if 'favour by comments' is set to 100% relative to 50, an article with 50 comments is 100% more likely to be stumbled than an article with none. Set these values to 0 for <strong>truely random</strong> articles."
+msgstr ""
+
+msgid "Changing these values will require all blog posts to be re-indexed."
+msgstr ""
+
+msgid "Favour by Comments:"
+msgstr ""
+
+msgid "Any percentage"
+msgstr ""
+
+msgid "Relative to:"
+msgstr ""
+
+msgid "With how many comments should an article be 100% more likely to be stumbled than an article with none? Probability will be calculated by the number of comments divided by the \"relative to\" value. <a href=\"http://en.wikipedia.org/wiki/Division_by_zero\">Can not be 0</a>."
+msgstr ""
+
+msgid "Limit:"
+msgstr ""
+
+msgid "When the number of comments reaches this value, favouring no longer becomes a factor."
+msgstr ""
+
+msgid "Automatically insert the 'Liked this article?' button at the end of all articles."
+msgstr ""
+
+msgid "Save Changes"
+msgstr ""
+
+msgid "How to use Stumble! for WordPress"
+msgstr ""
+
+msgid "Stumble! for WordPress is easy to integrate with any blog. To go to a random article, you can create a link to the following page:"
+msgstr ""
+
+msgid "<em>If</em> you have <a href=\"http://mitcho.com/code/yarpp/\">Yet Another Related Posts Plugin</a> installed, you can stumble to a similar article like this:"
+msgstr ""
+
+msgid "YARPP <strong>is</strong> installed on your blog."
+msgstr ""
+
+msgid "YARPP <strong>is not</strong> installed/activated on your blog. To use this feature, please download and install <a href=\"http://mitcho.com/code/yarpp/\">YARPP</a>."
+msgstr ""
+
+msgid "Just replace # with the <a href=\"http://codex.wordpress.org/Template_Tags/the_ID\">post's ID</a> and you will be brought to one of five related articles (from YARPP), chosen randomly."
+msgstr ""
+
+msgid "Code"
+msgstr ""
+
+msgid "We have a collection of buttons and links which you can include in theme files to use Stumble! for WordPress."
+msgstr ""
+
+msgid "Liked this article? button"
+msgstr ""
+
+msgid "Liked this article? Read another similar article."
+msgstr ""
+
+msgid "This button is designed for use on a single post page. When clicked, it will bring the user to a similar article. <strong>Requires YARPP</strong>"
+msgstr ""
+
+msgid "Basic Text Link"
+msgstr ""
+
+msgid "Random Article"
+msgstr ""
+
+msgid "Additional URLs:"
+msgstr ""
+
+msgid "List of URLs, apart from posts, which users can Stumble! to"
+msgstr ""
+
