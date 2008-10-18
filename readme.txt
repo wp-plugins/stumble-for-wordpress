@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=brend
 Tags: random, posts, navigation, links, tools
 Requires at least: 2.6
 Tested up to: 2.6.2
-Stable tag: 0.1.3
+Stable tag: 0.1.4
 
 Stumble! for WordPress extends WordPress to support a "random article" feature, similar to StumbleUpon's StumbleThru and Wikipedia's (Mediawiki's) random article feature.
 
