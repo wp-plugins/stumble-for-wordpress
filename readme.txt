@@ -4,9 +4,9 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=VJARS
 Tags: random, posts, navigation, links, tools, traffic
 Requires at least: 2.6
 Tested up to: 2.6.2
-Stable tag: 0.2
+Stable tag: 0.2.1
 
-Stumble! for WordPress extends WordPress to support a "random article" feature, similar to StumbleUpon's StumbleThru and Wikipedia's (Mediawiki's) random article feature. Increases pageviews.
+Stumble! for WordPress extends WordPress to support a "random article" feature, similar to StumbleUpon's StumbleThru. Increases pageviews.
 
 == Description ==
 
