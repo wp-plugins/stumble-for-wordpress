@@ -30,9 +30,9 @@ The plugin should work straight away, and configuration is optional.
 
 To make the best use of the plugin, please [download YARPP](http://mitcho.com/code/yarpp/) first.
 
-To insert a "stumble" button, simply link it to this URL: http://<Your Blog Location>/?stumble. The options panel will give you the exact link.
+To insert a "stumble" button, simply link it to this URL: http://your.url.com/?stumble. The options panel will give you the exact link.
 
-To make use of the related posts feature, you need to link to: http://<Your Blog Location>/?stumble=<ID>. Replace <ID> with the post ID. Information will be pulled from YARPP, if available, and the user will be brought to a related post.
+To make use of the related posts feature, you need to link to: http://your.url.com/?stumble=<ID>. Replace <ID> with the post ID. Information will be pulled from YARPP, if available, and the user will be brought to a related post.
 
 == Screenshots ==
 
