@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=VJARS
 Tags: random, posts, navigation, links, tools, traffic
 Requires at least: 2.6
 Tested up to: 2.6.2
-Stable tag: 0.2.2
+Stable tag: 0.2.3
 
 Stumble! for WordPress extends WordPress to support a "random article" feature, similar to StumbleUpon's StumbleThru. Increases pageviews.
 
@@ -30,9 +30,9 @@ The plugin should work straight away, and configuration is optional.
 
 To make the best use of the plugin, please [download YARPP](http://mitcho.com/code/yarpp/) first.
 
-To insert a "stumble" button, simply link it to this URL: http://<Your Blog Location>/?stumble. The options panel will give you the exact link.
+To insert a "stumble" button, simply link it to this URL: http://[Your Blog Location]/?stumble. The options panel will give you the exact link.
 
-To make use of the related posts feature, you need to link to: http://<Your Blog Location>/?stumble=<ID>. Replace <ID> with the post ID. Information will be pulled from YARPP, if available, and the user will be brought to a related post.
+To make use of the related posts feature, you need to link to: http://[Your Blog Location]/?stumble=[ID]. Replace [ID] with the post ID. Information will be pulled from YARPP, if available, and the user will be brought to a related post.
 
 == Screenshots ==
 
