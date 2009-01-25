@@ -5,7 +5,7 @@ Plugin Name: Stumble! For WordPress
 Plugin URI: http://making-the-web.com/stumble-for-wordpress/
 Description: Adds "random article" functionality to Wordpress, similar to StumbleUpon and Wikipedia's random article feature
 Author: Brendon Boshell
-Version: 1.0
+Version: 1.0.1
 Author URI: http://making-the-web.com
 */
 
@@ -22,7 +22,7 @@ Author URI: http://making-the-web.com
 
 */
 
-$_stumble_version          = "1.0";
+$_stumble_version          = "1.0.1";
 $GLOBALS['_stumble_table'] = $GLOBALS['wpdb']->prefix . "stumble"; // Wordpress wouldn't put these in the global space for me when activating :(
 $GLOBALS['_stumble_table_stats'] = $GLOBALS['wpdb']->prefix . "stumble_stats";
 $_stumble_hasOptions       = false;
@@ -348,8 +348,12 @@ function _stumble_get_options() {
 	
 	$_stumble_hasOptions = true;
 	
-	$_stumble_favour = get_option('_stumble_favour');
-	if(!is_array($_stumble_favour)) $_stumble_favour = unserialize($_stumble_favour);
+	$N_stumble_favour = get_option('_stumble_favour');
+	if($N_stumble_favour !== false) {
+		$_stumble_favour = $N_stumble_favour;
+		if(!is_array($_stumble_favour)) 
+			$_stumble_favour = unserialize($_stumble_favour);
+	}
 	
 	$_stumble_max              = get_option('_stumble_max');
 	$N_stumble_support         = get_option('_stumble_support');
