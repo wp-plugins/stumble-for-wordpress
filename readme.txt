@@ -3,8 +3,8 @@ Contributors: bbosh
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=VJARSRXSGKHTN&lc=GB&item_name=Making%20the%20Web&cn=Add%20special%20instructions%20to%20the%20seller&no_shipping=2&currency_code=GBP&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted
 Tags: random, posts, navigation, links, tools, traffic
 Requires at least: 2.6
-Tested up to: 2.6.2
-Stable tag: 0.2.3
+Tested up to: 2.7
+Stable tag: 1.0
 
 Stumble! for WordPress extends WordPress to support a "random article" feature, similar to StumbleUpon's StumbleThru. Increases pageviews.
 
@@ -18,7 +18,7 @@ The plugin supports basic "go to any random page" functionality, but can also in
 
 Since version 0.2, the plugin also shows statistics to show total number of stumbles, and hits to individual articles as a result of Stumble! for WordPress.
 
-Please let me know what you think of *Stumble! for WordPress*, and contribute your ideas and suggestions at [Making the Web](http://www.making-the-web.com/2008/10/12/stumble-for-wordpress/).
+**New for version 1.0**: You can now enter the *Stumble! for WordPress* network (from the options panel) which will send your traffic from stumbles from other blogs! (and visa-versa)
 
 == Installation ==
 
