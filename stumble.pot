@@ -162,3 +162,15 @@ msgstr ""
 
 msgid "To override the network system, simply use:"
 msgstr ""
+
+msgid "Public Network"
+msgstr ""
+
+msgid "Private Network"
+msgstr ""
+
+msgid "Private Key:"
+msgstr ""
+
+msgid "Join a Network"
+msgstr ""

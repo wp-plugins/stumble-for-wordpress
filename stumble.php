@@ -5,7 +5,7 @@ Plugin Name: Stumble! For WordPress
 Plugin URI: http://making-the-web.com/stumble-for-wordpress/
 Description: Adds "random article" functionality to Wordpress, similar to StumbleUpon and Wikipedia's random article feature
 Author: Brendon Boshell
-Version: 1.0.1
+Version: 1.1
 Author URI: http://making-the-web.com
 */
 
@@ -22,7 +22,7 @@ Author URI: http://making-the-web.com
 
 */
 
-$_stumble_version          = "1.0.1";
+$_stumble_version          = "1.1";
 $GLOBALS['_stumble_table'] = $GLOBALS['wpdb']->prefix . "stumble"; // Wordpress wouldn't put these in the global space for me when activating :(
 $GLOBALS['_stumble_table_stats'] = $GLOBALS['wpdb']->prefix . "stumble_stats";
 $_stumble_hasOptions       = false;
@@ -33,7 +33,7 @@ $_stumble_auto_insert      = true;
 $_stumble_altUrls          = array();
 
 // new in version 1.0 - Stumble! for WP network
-$_stumble_on_network       = false;
+$_stumble_on_network       = true;
 $_stumble_network_percent  = 75;
 $_stumble_network_cat      = "other";
 
@@ -45,10 +45,6 @@ function _stumble_altUrlsMap($data) {
 
 function _stumble_options_panel() {
 	global $_stumble_favour, $_stumble_support, $_stumble_auto_insert, $_stumble_altUrls, $wpdb, $_stumble_table_stats, $_stumble_on_network, $_stumble_network_percent, $_stumble_network_cat;
-	
-	if($_POST['_stumble_slashes'] == '\\\'') { // slashes problem
-		$_POST['_stumble_favour_comments']      = stripslashes($_POST['_stumble_favour_comments']);
-	}
 	
 	if(isset($_POST['Submit'])) {
 	
@@ -83,7 +79,21 @@ function _stumble_options_panel() {
 		
 		update_option("_stumble_on_network", $_POST['_stumble_on_network']);
 		update_option("_stumble_network_percent", $_POST['_stumble_network_percent']);
-		update_option("_stumble_network_cat", $_POST['_stumble_network_cat']);
+		
+		if($_POST['_stumble_network_public'] == "no") {
+            update_option("_stumble_network_private", "true");
+			if($_POST['_stumble_network_private_code'] != get_option('_stumble_network_cat')) {
+			
+				update_option("_stumble_network_cat", $_POST['_stumble_network_private_code']);		 
+				?>
+					<iframe src="http://stumble.making-the-web.com/?cat=<?php echo htmlspecialchars(urlencode($_POST['_stumble_network_private_code'])); ?>&r=<?php echo htmlspecialchars(urlencode(get_bloginfo('url'))); ?>&join=true" frameborder="0" width="0" height="0" style="width: 0; height: 0;"></iframe>
+				<?php
+			
+			}	
+		}else{
+			update_option("_stumble_network_private", "false");
+			update_option("_stumble_network_cat", $_POST['_stumble_network_cat']);
+		}
 		
 	}
 	
@@ -99,8 +109,6 @@ function _stumble_options_panel() {
 			<p><div id="message" class="updated fade"><p><strong><?php _e("Your settings have been updated.", 'stumble'); ?></strong></p></div></p>
 		<?php } ?>
 		
-		<h3><?php _e("Statistics", 'stumble'); ?></h3>
-		
 		<?php
 			
 			$table = '<table cellspacing="5" cellpadding="0" border="0"><tr><th align="left">URL</th><th align="left">Hits</th></tr>';
@@ -108,11 +116,6 @@ function _stumble_options_panel() {
 			$i = 10;
 			
 			$results = $wpdb->get_results("SELECT url, hits FROM `$_stumble_table_stats` ORDER BY hits DESC LIMIT 0, ".$i++, ARRAY_A);
-			
-			/*
-				Thanks to an anonymous user, "dhave config", for pointing out that I didn't check
-				$results was an array
-			*/
 			
 			if(is_array($results)) foreach($results as $result) {
 			
@@ -136,23 +139,149 @@ function _stumble_options_panel() {
 			$table .= '</table>';
 			
 		?>
-			<h4><?php printf(__('Total Stumbles: %d', 'stumble'), $overall_hits); ?></h4>
-		<?php
-			
-			echo $table;
-				
-		?>
-		
-		<div style="height: 70px;"></div>
 			
 		<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo plugin_basename(__FILE__) ?>">
 			<?php wp_nonce_field('stumble-update-options'); ?>
 			
 			<input type="hidden" name="_stumble_slashes" value="'" />
 			
-			<h3><?php _e('Options', 'stumble'); ?></h3>
+			<div>
 			
-				<div style="border: 1px dashed #999999; padding: 10px;">
+				<h3><?php _e("Networked blogs", 'stumble'); ?></h3>
+				
+				<p><?php _e("If you join the <i>Stumble! for WordPress</i> network, readers from your blog will be sent to other, relevant blogs. Similarly, readers will be sent to articles on your site.", 'stumble'); ?></p>
+				
+				<table cellspacing="7" cellpadding="5" border="0">
+					
+					<tr>
+						<td valign="top" align="right"><input type="checkbox" name="_stumble_on_network" id="_stumble_on_network" value="true" <?php if($_stumble_on_network) { ?> checked="checked"<?php } ?> /></td>
+						<td valign="top"><?php _e('Join a Network', 'stumble'); ?></td>
+					</tr>
+					
+					<tr>
+						<td valign="top"></td>
+						<td valign="top"><?php printf(__('Send %s%% of stumbles to networked blogs.', 'stumble'), '<input type="text" name="_stumble_network_percent" size="5" value="'. $_stumble_network_percent .'" />'); ?></td>
+					</tr>
+					
+					<?php
+							
+								$list = "";
+							
+								$publicCat = false;
+							
+								$cats = array(
+								
+									'autos'           => __("Autos", 'stumble'),
+									'baby'            => __("Baby", 'stumble'),
+									'news'            => __("News", 'stumble'),
+									'business'        => __("Business", 'stumble'),
+									'gambling'        => __("Gambling", 'stumble'),
+									'computer'        => __("Computer", 'stumble'),
+									'education'       => __("Education", 'stumble'),
+									'health'          => __("Health", 'stumble'),
+									'entertainment'   => __("Entertainment", 'stumble'),
+									'personal'        => __("Personal", 'stumble'),
+									'science'         => __("Science", 'stumble'),
+									'religion'        => __("Religion", 'stumble'),
+									'seo'             => __("SEO", 'stumble'),
+									'technology'      => __("Technology", 'stumble'),
+									'web-dev'         => __("Web Development", 'stumble'),
+									'adult'           => __("Adult", 'stumble'),
+									'other'           => __("Other", 'stumble')
+									
+								
+								);
+								
+								asort($cats);
+								
+								foreach($cats as $val => $name) {
+									$list .= "<option value=\"".$val."\"";
+									if($_stumble_network_cat == $val) { 
+										$publicCat = true;
+										$list.= " selected=\"selected\"";
+									}
+									$list .= ">".$name."</option>";
+								}
+							
+							
+							?>
+					
+					<tr>
+						<td valign="top" align="right"><input type="radio" name="_stumble_network_public" value="yes"<?php if($publicCat) { ?> checked="checked"<?php } ?> /></td>
+						<td valign="top">
+							
+							<?php _e("Public Network", 'stumble'); ?>
+							
+						</td>
+						
+					</tr>
+					
+					<tr>
+					
+						<td></td>
+						<td>
+							
+							<?php _e("Category:", 'stumble'); ?> <select name="_stumble_network_cat" style="vertical-align: middle;">
+						
+							<?php
+								echo $list;
+							?>
+							
+							</select>
+							
+						</td>
+						
+					</tr>
+					
+					<tr>
+						<td valign="top" align="right"><input type="radio" name="_stumble_network_public" value="no"<?php if(!$publicCat) { ?> checked="checked"<?php } ?> /></td>
+						<td valign="top">
+							
+							<?php _e("Private Network", 'stumble'); ?>
+							
+						</td>
+						
+					</tr>
+					
+					<tr>
+						<td></td>	
+						
+						<td>
+						
+							<script type="text/javascript">
+								function genCode() {
+									var code = ''; 
+									for(var a = 0; a < 9; a++) {
+										code += String.fromCharCode( Math.floor((Math.random()*26)+97));
+									} 
+									document.getElementById('_stumble_network_private_code').value = code;
+								}
+							</script>
+							
+							<?php _e("Private Key:", 'stumble'); ?> <input type="text" name="_stumble_network_private_code" id="_stumble_network_private_code" value="<?php if(!$publicCat) { echo htmlspecialchars($_stumble_network_cat); }?>" /> <input type="button" name="rand" value="Random" onclick="genCode();" />
+							
+							<?php if($publicCat) { ?>
+								<script type="text/javascript">
+									genCode();
+								</script>
+							<?php } ?>
+							
+							<p><?php _e("If you have a collection of a blogs, you can set-up your own private network to exchange stumbles between your blogs only. Firstly, generate a random key. Then, copy this key to the 'Private Key' field for all of your other blogs. After a short while, you will be able to stumble across your own private network. After clicking save, <strong>wait for confirmation</strong> from the network.", 'stumble'); ?></p>
+						
+						</td>
+					</tr>
+					
+				</table>
+				
+			</div>
+			
+			<p class="submit">
+				<input type="submit" name="Submit" value="<?php _e('Save Changes'); ?>" />
+			</p>
+			
+			<div style="height: 70px;"></div>
+			
+			<h3><?php _e('Options', 'stumble'); ?></h3>
 			
 					<p><?php _e("The options below specify how the number of comments will 'weigh' on an article's probability of being stumbled. For example, if 'favour by comments' is set to 100% relative to 50, an article with 50 comments is 100% more likely to be stumbled than an article with none. Set these values to 0 for <strong>truely random</strong> articles.", 'stumble'); ?></p>
 					
@@ -186,7 +315,7 @@ function _stumble_options_panel() {
 						
 					</table>
 					
-				</div>
+					
 			
 			<table cellspacing="7" cellpadding="5" border="0">
 				
@@ -207,7 +336,7 @@ function _stumble_options_panel() {
 					<td valign="top"><?php _e('Additional URLs:', 'stumble'); ?></td>
 					
 					<td>
-						<textarea name="_stumble_altUrls" cols="50" rows="8"><?php if(is_array($_stumble_altUrls)) foreach($_stumble_altUrls as $cururl) { echo $cururl[0]." ".$cururl[1]."\n"; } ?></textarea> <br />(<small><?php _e("List of URLs, apart from posts, which users can Stumble! to", 'stumble'); ?></small>)<br />
+						<textarea name="_stumble_altUrls" cols="50" rows="4"><?php if(is_array($_stumble_altUrls)) foreach($_stumble_altUrls as $cururl) { echo $cururl[0]." ".$cururl[1]."\n"; } ?></textarea> <br />(<small><?php _e("List of URLs, apart from posts, which users can Stumble! to", 'stumble'); ?></small>)<br />
 						<p><?php _e("Write Like This:", 'stumble'); ?></p>
 						<blockquote>
 							50 http://making-the-web.com/
@@ -217,83 +346,23 @@ function _stumble_options_panel() {
 					</td>
 				</tr>
 				
-			</table>
-			
-			<div style="border: 1px solid #000066; padding: 10px;">
-			
-				<h3><?php _e("Networked blogs", 'stumble'); ?></h3>
-				
-				<p><?php _e("If you join the <i>Stumble! for WordPress</i> network, readers from your blog will be sent to other, relevant blogs. Similarly, readers will be sent to articles on your site.", 'stumble'); ?></p>
-				
-				<table cellspacing="7" cellpadding="5" border="0">
-					
-					<tr>
-						<td valign="top" align="right"><input type="checkbox" name="_stumble_on_network" id="_stumble_on_network" value="true" <?php if($_stumble_on_network) { ?> checked="checked"<?php } ?> /></td>
-						<td valign="top"><?php _e('Join Network', 'stumble'); ?></td>
-					</tr>
-					
-					<tr>
-						<td valign="top"></td>
-						<td valign="top"><?php printf(__('Send %s%% of stumbles to networked blogs.', 'stumble'), '<input type="text" name="_stumble_network_percent" size="5" value="'. $_stumble_network_percent .'" />'); ?></td>
-					</tr>
-					
-					<tr>
-						<td valign="top"><?php _e("Category:", 'stumble'); ?></td>
-						<td valign="top">
-							
-							<select name="_stumble_network_cat">
-						
-							<?php
-							
-								$cats = array(
-								
-									'autos'           => __("Autos", 'stumble'),
-									'baby'            => __("Baby", 'stumble'),
-									'news'            => __("News", 'stumble'),
-									'business'        => __("Business", 'stumble'),
-									'gambling'        => __("Gambling", 'stumble'),
-									'computer'        => __("Computer", 'stumble'),
-									'education'       => __("Education", 'stumble'),
-									'health'          => __("Health", 'stumble'),
-									'entertainment'   => __("Entertainment", 'stumble'),
-									'personal'        => __("Personal", 'stumble'),
-									'science'         => __("Science", 'stumble'),
-									'religion'        => __("Religion", 'stumble'),
-									'seo'             => __("SEO", 'stumble'),
-									'technology'      => __("Technology", 'stumble'),
-									'web-dev'         => __("Web Development", 'stumble'),
-									'adult'           => __("Adult", 'stumble'),
-									'other'           => __("Other", 'stumble')
-									
-								
-								);
-								
-								asort($cats);
-								
-								foreach($cats as $val => $name) {
-									?>
-									<option value="<?php echo $val; ?>"<?php if($_stumble_network_cat == $val) { ?> selected="selected"<?php } ?>><?php echo $name; ?></option>
-									<?php
-								}
-							
-							
-							?>
-							
-							</select>
-						
-						</td>
-					</tr>
-					
-				</table>
-				
-			</div>
-			
-			
+			</table>		
 			
 			<p class="submit">
 				<input type="submit" name="Submit" value="<?php _e('Save Changes'); ?>" />
 			</p>
 			
+			<div style="height: 70px;"></div>
+			
+			<h3><?php _e("Statistics", 'stumble'); ?></h3>
+			
+			<h4><?php printf(__('Total Stumbles: %d', 'stumble'), $overall_hits); ?></h4>
+			<?php
+				
+				echo $table;
+					
+			?>
+		
 			<div style="height: 70px;"></div>
 			
 			<h3><?php _e("How to use Stumble! for WordPress", 'stumble'); ?></h3>
@@ -492,10 +561,18 @@ function _stumble_update($id) {
 	_stumble_update_table($id);
 }
 
+$GLOBALS['_stumble_startedinstall'] = false;
+
 function _stumble_install() {
-	global $wpdb, $_stumble_table, $_stumble_table_stats, $_stumble_version;
+	global $wpdb, $_stumble_table, $_stumble_table_stats, $_stumble_version, $_stumble_startedinstall;
+	
+	if($_stumble_startedinstall) return;
+	$_stumble_startedinstall = true;
 	
 	require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
+	
+	$upgrade = get_option('_stumble_installed') ? true : false;
+	$notifyInstall = (get_option('_stumble_installed') == $_stumble_version) ? false : true;
 	
 	$structure = array(
 				'id'             => array('Key' => 'PRI'),
@@ -597,6 +674,36 @@ function _stumble_install() {
 	
 	wp_clear_scheduled_hook('_stumble_update_table_event');
 	wp_schedule_event(time(), 'hourly', '_stumble_update_table_event');
+	
+	if($notifyInstall) {
+	
+		$message  = "Hi\n\n";
+		$message .= "Stumble! for WordPress ".$_stumble_version." has been successfully installed.\n\n";
+		
+		if($upgrade)
+			$message .= "Your previous settings have been applied.\n\n";
+		else{
+			$message .= "We have automatically placed the 'Stumble!' button at the bottom of every post on your blog. You are also able to create your own buttons and links, rather than using the default button. To stumble through your blog, simply link to this URL:\n\n";
+			$message .= get_bloginfo('url')."/?stumble\n\n";
+			$message .= "You have also been automatically joined up to the Stumble! for Wordpress network which will send stumblers to your blog. Please make sure you set your site's category from the settings page.\n\n";
+		}
+		
+		if(get_option('_stumble_on_network') != "true") {
+		
+			$message .= "You are *not* currently using the Stumble! for WordPress network to allow readers from other blogs to stumble through your posts. Joining the network will help increase the number of pageviews your blog receives, and ultimately leads to more subscribers.\n";
+			$message .= "The network is totally free, and you can easily join from the plugin's option page.\n\n";
+		
+		}
+		
+		$message .= "If you require any help in setting up the plugin, or have any suggestion or question, just leave a comment at MTW: http://making-the-web.com/stumble-for-wordpress/\n\n";
+		
+		$message .= "Thanks for using the plugin,\nBrendon Boshell\n\nhttp://www.making-the-web.com\n\n";
+		
+		$message .= "(Sent via your WordPress blog)";
+	
+		wp_mail(get_option("admin_email"), "Stumble! for WordPress ".($upgrade ? "upgraded" : "installed"), $message, "");
+		
+	}
 }
 
 function _stumble_ShiftLeftAs32($val, $l) { /* 32 bit shift */
@@ -649,6 +756,8 @@ function _stumble_stumbleGo($id, $url)
 	header('HTTP/1.0 301 Moved Permanently');
 	header('Location: '.$url);
 	
+	/* A call to exit() should be made in the parent */
+	
 }
 
 function _stumble_stumble($int = false) {
@@ -661,8 +770,11 @@ function _stumble_stumble($int = false) {
 	if($_GET['stumble'][0] != '/') {
 		if($_stumble_on_network == "true" && !isset($_GET['nonetwork'])) {
 			if(rand(0, 100) < $_stumble_network_percent) {
+			
+				$cat = (get_option("_stumble_network_private") === "true") ? "" : $_stumble_network_cat; // private networks don't want to disclose their key - network subscription has been negotiated with MTW
+			
 				header('HTTP/1.0 301 Moved Permanently');
-				header('Location: http://stumble.making-the-web.com/?cat='.$_stumble_network_cat.'&r='.urlencode(get_bloginfo('url')));
+				header('Location: http://stumble.making-the-web.com/?cat='.$cat.'&r='.urlencode(get_bloginfo('url')));
 				exit;
 			}
 		}
@@ -702,7 +814,7 @@ function _stumble_stumble($int = false) {
 	
 	$stats = array();
 	
-	$sqlcond = '';;
+	$sqlcond = '';
 	
 	if(is_array($visited)) foreach($visited as $val => $null) {
 		$sqlcond .= ' AND id != '.$val;
@@ -749,7 +861,7 @@ function _stumble_stumble($int = false) {
 		}
 	}
 	
-	_stumble_cookie_append($result[0]);
+	//_stumble_cookie_append($result[0]); // this is handled in _stumble_stumbleGo()
 	
 	if(!$result[1]) {
 		$url = $result[2];
@@ -814,12 +926,16 @@ function _stumble_cookie_append($id) {
 	_stumble_cookie_delete();
 	
 	setcookie('_stumble_recent', $cookievals, time()+1209600, dirname($_SERVER['REQUEST_URI']).'/');
+	$_COOKIE['_stumble_recent'] = $cookievals; // for future reference in the script
 }
 
 function _stumble_cat() {
-	global $_stumble_network_cat;
+	global $_stumble_network_cat, $_stumble_version;
 	_stumble_get_options();
-	echo "***".$_stumble_network_cat."***";
+	
+ 	$resp = ($_GET['stumblecheck'] == $_stumble_network_cat) ? "YES" : "NO";
+	
+	echo "***VER-".$_stumble_version."***".$resp."***";
 	exit;
 }
 
@@ -869,6 +985,6 @@ if(get_option('_stumble_auto_insert') == "true") {
 }
 
 if(get_option('_stumble_installed') != $_stumble_version)
-	_stumble_install();
+	add_action('init', '_stumble_install');
 
 ?>
