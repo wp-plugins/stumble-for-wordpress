@@ -1,10 +1,13 @@
 === Stumble! for WordPress ===
 Contributors: bbosh
+Author: bbosh (Brendon Boshell)
+Author URI: http://infinity-infinity.com/
+Plugin URI: http://infinity-infinity.com/2009/07/stumble-for-wordpress/
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=VJARSRXSGKHTN&lc=GB&item_name=Making%20the%20Web&cn=Add%20special%20instructions%20to%20the%20seller&no_shipping=2&currency_code=GBP&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted
 Tags: random, posts, navigation, links, tools, traffic
 Requires at least: 2.6
-Tested up to: 2.7
-Stable tag: 1.1
+Tested up to: 2.8
+Stable tag: 1.1.1
 
 Stumble! for WordPress extends WordPress to support a "random article" feature, similar to StumbleUpon's StumbleThru. Increases pageviews.
 

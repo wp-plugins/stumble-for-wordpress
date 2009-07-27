@@ -2,11 +2,11 @@
 
 /*
 Plugin Name: Stumble! For WordPress
-Plugin URI: http://making-the-web.com/stumble-for-wordpress/
+Plugin URI: http://infinity-infinity.com/2009/07/stumble-for-wordpress/
 Description: Adds "random article" functionality to Wordpress, similar to StumbleUpon and Wikipedia's random article feature
 Author: Brendon Boshell
-Version: 1.1
-Author URI: http://making-the-web.com
+Version: 1.1.1
+Author URI: http://infinity-infinity.com/
 */
 
 /*
@@ -22,7 +22,7 @@ Author URI: http://making-the-web.com
 
 */
 
-$_stumble_version          = "1.1";
+$_stumble_version          = "1.1.1";
 $GLOBALS['_stumble_table'] = $GLOBALS['wpdb']->prefix . "stumble"; // Wordpress wouldn't put these in the global space for me when activating :(
 $GLOBALS['_stumble_table_stats'] = $GLOBALS['wpdb']->prefix . "stumble_stats";
 $_stumble_hasOptions       = false;
@@ -86,7 +86,7 @@ function _stumble_options_panel() {
 			
 				update_option("_stumble_network_cat", $_POST['_stumble_network_private_code']);		 
 				?>
-					<iframe src="http://stumble.making-the-web.com/?cat=<?php echo htmlspecialchars(urlencode($_POST['_stumble_network_private_code'])); ?>&r=<?php echo htmlspecialchars(urlencode(get_bloginfo('url'))); ?>&join=true" frameborder="0" width="0" height="0" style="width: 0; height: 0;"></iframe>
+					<iframe src="http://stumble.22talk.com/?cat=<?php echo htmlspecialchars(urlencode($_POST['_stumble_network_private_code'])); ?>&r=<?php echo htmlspecialchars(urlencode(get_bloginfo('url'))); ?>&join=true" frameborder="0" width="0" height="0" style="width: 0; height: 0;"></iframe>
 				<?php
 			
 			}	
@@ -301,7 +301,7 @@ function _stumble_options_panel() {
 							<td><?php _e('Relative to:', 'stumble'); ?></td>
 							
 							<td>
-								<input type="text" name="_stumble_favour_comments_relative" size="5" value="<?php echo $_stumble_favour['comments'][1]; ?>" /> (<small><?php _e('With how many comments should an article be 100% more likely to be stumbled than an article with none? Probability will be calculated by the number of comments divided by the "relative to" value. <a href="http://en.wikipedia.org/wiki/Division_by_zero">Can not be 0</a>.', 'stumble'); ?></small>)
+								<input type="text" name="_stumble_favour_comments_relative" size="5" value="<?php echo $_stumble_favour['comments'][1]; ?>" /> (<small><?php _e('With how many comments should an article be 100% more likely to be stumbled than an article with none? Probability will be calculated by the number of comments divided by the "relative to" value. Can not be 0.', 'stumble'); ?></small>)
 							</td>
 						</tr>
 						
@@ -339,7 +339,7 @@ function _stumble_options_panel() {
 						<textarea name="_stumble_altUrls" cols="50" rows="4"><?php if(is_array($_stumble_altUrls)) foreach($_stumble_altUrls as $cururl) { echo $cururl[0]." ".$cururl[1]."\n"; } ?></textarea> <br />(<small><?php _e("List of URLs, apart from posts, which users can Stumble! to", 'stumble'); ?></small>)<br />
 						<p><?php _e("Write Like This:", 'stumble'); ?></p>
 						<blockquote>
-							50 http://making-the-web.com/
+							50 http://infinity-infinity.com/
 						</blockquote>
 						<p><?php _e("Where the number (50, in this case) is the number of \"comments\" on the page. The page doesn't necessarily have to use comments, but this indicates the importance of the page, relative to your blog's posts.", 'stumble'); ?></p>
 						<p><?php _e("One line per URL", 'stumble'); ?></p>
@@ -673,35 +673,35 @@ function _stumble_install() {
 	update_option('_stumble_installed', $_stumble_version);
 	
 	wp_clear_scheduled_hook('_stumble_update_table_event');
-	wp_schedule_event(time(), 'hourly', '_stumble_update_table_event');
+	wp_schedule_event(time(), 'daily', '_stumble_update_table_event');
 	
 	if($notifyInstall) {
 	
-		$message  = "Hi\n\n";
-		$message .= "Stumble! for WordPress ".$_stumble_version." has been successfully installed.\n\n";
+		$message  = __("Hi\n\n", "stumble");
+		$message .= __("Stumble! for WordPress ".$_stumble_version." has been successfully installed.\n\n", "stumble");
 		
 		if($upgrade)
-			$message .= "Your previous settings have been applied.\n\n";
+			$message .= __("Your previous settings have been applied.\n\n", "stumble");
 		else{
-			$message .= "We have automatically placed the 'Stumble!' button at the bottom of every post on your blog. You are also able to create your own buttons and links, rather than using the default button. To stumble through your blog, simply link to this URL:\n\n";
-			$message .= get_bloginfo('url')."/?stumble\n\n";
-			$message .= "You have also been automatically joined up to the Stumble! for Wordpress network which will send stumblers to your blog. Please make sure you set your site's category from the settings page.\n\n";
+			$message .= __("We have automatically placed the 'Stumble!' button at the bottom of every post on your blog. You are also able to create your own buttons and links, rather than using the default button. To stumble through your blog, simply link to this URL:\n\n", "stumble");
+			$message .= __(get_bloginfo('url')."/?stumble\n\n", "stumble");
+			$message .= __("You have also been automatically joined up to the Stumble! for Wordpress network which will send stumblers to your blog. Please make sure you set your site's category from the settings page.\n\n", "stumble");
 		}
 		
 		if(get_option('_stumble_on_network') != "true") {
 		
-			$message .= "You are *not* currently using the Stumble! for WordPress network to allow readers from other blogs to stumble through your posts. Joining the network will help increase the number of pageviews your blog receives, and ultimately leads to more subscribers.\n";
-			$message .= "The network is totally free, and you can easily join from the plugin's option page.\n\n";
+			$message .= __("You are *not* currently using the Stumble! for WordPress network to allow readers from other blogs to stumble through your posts. Joining the network will help increase the number of pageviews your blog receives, and ultimately leads to more subscribers.\n", "stumble");
+			$message .= __("The network is totally free, and you can easily join from the plugin's option page.\n\n", "stumble");
 		
 		}
 		
-		$message .= "If you require any help in setting up the plugin, or have any suggestion or question, just leave a comment at MTW: http://making-the-web.com/stumble-for-wordpress/\n\n";
+		$message .= __("If you require any help in setting up the plugin, or have any suggestion or question, just leave a comment at Infinity-Infinity.com forums: http://infinity-infinity.com/forums/forum/4\n\n", "stumble");
 		
-		$message .= "Thanks for using the plugin,\nBrendon Boshell\n\nhttp://www.making-the-web.com\n\n";
+		$message .= __("Thank you for using the plugin,\nBrendon Boshell\n\nhttp://www.infinity-infinity.com/\n\n", "stumble");
 		
-		$message .= "(Sent via your WordPress blog)";
+		$message .= __("(Sent via your WordPress blog)", "stumble");
 	
-		wp_mail(get_option("admin_email"), "Stumble! for WordPress ".($upgrade ? "upgraded" : "installed"), $message, "");
+		wp_mail(get_option("admin_email"), ($upgrade ? __("Stumble! for WordPress upgraded", "stumble") : __("Stumble! for WordPress installed", "stumble")), $message, "");
 		
 	}
 }
@@ -774,7 +774,7 @@ function _stumble_stumble($int = false) {
 				$cat = (get_option("_stumble_network_private") === "true") ? "" : $_stumble_network_cat; // private networks don't want to disclose their key - network subscription has been negotiated with MTW
 			
 				header('HTTP/1.0 301 Moved Permanently');
-				header('Location: http://stumble.making-the-web.com/?cat='.$cat.'&r='.urlencode(get_bloginfo('url')));
+				header('Location: http://stumble.22talk.com/?cat='.$cat.'&r='.urlencode(get_bloginfo('url')));
 				exit;
 			}
 		}
@@ -884,7 +884,7 @@ function _stumble_auto($data) {
 	
 	if(!is_single()) return $data;
 
-	$button = '<div align="center" style="padding: 20px 5px;"><a href="'.get_bloginfo('url').'/?stumble='.$post->ID.'" rel="nofollow"><img src="'.get_bloginfo('url').'/wp-content/plugins/'.dirname(plugin_basename(__FILE__)).'/liked.png" border="0" width="300" height="92" alt="'.__("Liked this article? Read another similar article.", 'stumble').'" /></a>'.((get_option('_stumble_support') == "true") ? '<br /><small><a href="http://making-the-web.com/stumble-for-wordpress/">Powered by Stumble! for WordPress</a></small>' : '').'</div>';
+	$button = '<div align="center" style="padding: 20px 5px;"><a href="'.get_bloginfo('url').'/?stumble='.$post->ID.'" rel="nofollow"><img src="'.get_bloginfo('url').'/wp-content/plugins/'.dirname(plugin_basename(__FILE__)).'/liked.png" border="0" width="300" height="92" alt="'.__("Liked this article? Read another similar article.", 'stumble').'" /></a>'.((get_option('_stumble_support') == "true") ? '<br /><small><a href="http://infinity-infinity.com/stumble-for-wordpress/" rel="nofollow">Stumble! for WP</a></small>' : '').'</div>';
 	
 	return $data.$button;
 	
@@ -965,7 +965,6 @@ function _stumble_yarpp() {
 } /* _stumble_yarpp() */
 
 add_action('admin_menu', '_stumble_options', 20);
-add_action('activate_'.plugin_basename(__FILE__), '_stumble_install');
 
 add_action('edit_post', '_stumble_update', 1, 1);
 add_action('delete_post', '_stumble_delete_post', 1, 1);
