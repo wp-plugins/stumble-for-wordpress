@@ -1,0 +1,306 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Stumble! for Wordpress\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-07-26 13:39-0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Brendon <brendon@.>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: stumble.php:106
+msgid "Stumble! for WordPress"
+msgstr ""
+
+#: stumble.php:109
+msgid "Your settings have been updated."
+msgstr ""
+
+#: stumble.php:150
+msgid "Networked blogs"
+msgstr ""
+
+#: stumble.php:152
+msgid "If you join the <i>Stumble! for WordPress</i> network, readers from your blog will be sent to other, relevant blogs. Similarly, readers will be sent to articles on your site."
+msgstr ""
+
+#: stumble.php:158
+msgid "Join a Network"
+msgstr ""
+
+#: stumble.php:163
+#, php-format
+msgid "Send %s%% of stumbles to networked blogs."
+msgstr ""
+
+#: stumble.php:174
+msgid "Autos"
+msgstr ""
+
+#: stumble.php:175
+msgid "Baby"
+msgstr ""
+
+#: stumble.php:176
+msgid "News"
+msgstr ""
+
+#: stumble.php:177
+msgid "Business"
+msgstr ""
+
+#: stumble.php:178
+msgid "Gambling"
+msgstr ""
+
+#: stumble.php:179
+msgid "Computer"
+msgstr ""
+
+#: stumble.php:180
+msgid "Education"
+msgstr ""
+
+#: stumble.php:181
+msgid "Health"
+msgstr ""
+
+#: stumble.php:182
+msgid "Entertainment"
+msgstr ""
+
+#: stumble.php:183
+msgid "Personal"
+msgstr ""
+
+#: stumble.php:184
+msgid "Science"
+msgstr ""
+
+#: stumble.php:185
+msgid "Religion"
+msgstr ""
+
+#: stumble.php:186
+msgid "SEO"
+msgstr ""
+
+#: stumble.php:187
+msgid "Technology"
+msgstr ""
+
+#: stumble.php:188
+msgid "Web Development"
+msgstr ""
+
+#: stumble.php:189
+msgid "Adult"
+msgstr ""
+
+#: stumble.php:190
+msgid "Other"
+msgstr ""
+
+#: stumble.php:213
+msgid "Public Network"
+msgstr ""
+
+#: stumble.php:224
+msgid "Category:"
+msgstr ""
+
+#: stumble.php:240
+msgid "Private Network"
+msgstr ""
+
+#: stumble.php:261
+msgid "Private Key:"
+msgstr ""
+
+#: stumble.php:269
+msgid "If you have a collection of a blogs, you can set-up your own private network to exchange stumbles between your blogs only. Firstly, generate a random key. Then, copy this key to the 'Private Key' field for all of your other blogs. After a short while, you will be able to stumble across your own private network. After clicking save, <strong>wait for confirmation</strong> from the network."
+msgstr ""
+
+#: stumble.php:279
+#: stumble.php:352
+msgid "Save Changes"
+msgstr ""
+
+#: stumble.php:284
+msgid "Options"
+msgstr ""
+
+#: stumble.php:286
+msgid "The options below specify how the number of comments will 'weigh' on an article's probability of being stumbled. For example, if 'favour by comments' is set to 100% relative to 50, an article with 50 comments is 100% more likely to be stumbled than an article with none. Set these values to 0 for <strong>truely random</strong> articles."
+msgstr ""
+
+#: stumble.php:288
+msgid "Changing these values will require all blog posts to be re-indexed."
+msgstr ""
+
+#: stumble.php:293
+msgid "Favour by Comments:"
+msgstr ""
+
+#: stumble.php:296
+msgid "Any percentage"
+msgstr ""
+
+#: stumble.php:301
+msgid "Relative to:"
+msgstr ""
+
+#: stumble.php:304
+msgid "With how many comments should an article be 100% more likely to be stumbled than an article with none? Probability will be calculated by the number of comments divided by the \"relative to\" value. Can not be 0."
+msgstr ""
+
+#: stumble.php:309
+msgid "Limit:"
+msgstr ""
+
+#: stumble.php:312
+msgid "When the number of comments reaches this value, favouring no longer becomes a factor."
+msgstr ""
+
+#: stumble.php:326
+msgid "Automatically insert the 'Liked this article?' button at the end of all articles."
+msgstr ""
+
+#: stumble.php:336
+msgid "Additional URLs:"
+msgstr ""
+
+#: stumble.php:339
+msgid "List of URLs, apart from posts, which users can Stumble! to"
+msgstr ""
+
+#: stumble.php:340
+msgid "Write Like This:"
+msgstr ""
+
+#: stumble.php:344
+msgid "Where the number (50, in this case) is the number of \"comments\" on the page. The page doesn't necessarily have to use comments, but this indicates the importance of the page, relative to your blog's posts."
+msgstr ""
+
+#: stumble.php:345
+msgid "One line per URL"
+msgstr ""
+
+#: stumble.php:357
+msgid "Statistics"
+msgstr ""
+
+#: stumble.php:359
+#, php-format
+msgid "Total Stumbles: %d"
+msgstr ""
+
+#: stumble.php:368
+msgid "How to use Stumble! for WordPress"
+msgstr ""
+
+#: stumble.php:370
+msgid "Stumble! for WordPress is easy to integrate with any blog. To go to a random article, you can create a link to the following page:"
+msgstr ""
+
+#: stumble.php:374
+msgid "To override the network system, simply use:"
+msgstr ""
+
+#: stumble.php:378
+msgid "<em>If</em> you have <a href=\"http://mitcho.com/code/yarpp/\">Yet Another Related Posts Plugin</a> installed, you can stumble to a similar article like this:"
+msgstr ""
+
+#: stumble.php:386
+msgid "YARPP <strong>is</strong> installed on your blog."
+msgstr ""
+
+#: stumble.php:392
+msgid "YARPP <strong>is not</strong> installed/activated on your blog. To use this feature, please download and install <a href=\"http://mitcho.com/code/yarpp/\">YARPP</a>."
+msgstr ""
+
+#: stumble.php:398
+msgid "Just replace # with the <a href=\"http://codex.wordpress.org/Template_Tags/the_ID\">post's ID</a> and you will be brought to one of five related articles (from YARPP), chosen randomly."
+msgstr ""
+
+#: stumble.php:402
+msgid "Disclaimer: This plugin is not associated with <a href=\"http://www.stumbleupon.com/\">StumbleUpon</a>."
+msgstr ""
+
+#: stumble.php:680
+msgid ""
+"Hi\n"
+"\n"
+msgstr ""
+
+#: stumble.php:681
+msgid "Stumble! for WordPress "
+msgstr ""
+
+#: stumble.php:684
+msgid ""
+"Your previous settings have been applied.\n"
+"\n"
+msgstr ""
+
+#: stumble.php:686
+msgid ""
+"We have automatically placed the 'Stumble!' button at the bottom of every post on your blog. You are also able to create your own buttons and links, rather than using the default button. To stumble through your blog, simply link to this URL:\n"
+"\n"
+msgstr ""
+
+#: stumble.php:687
+msgid ""
+"/?stumble\n"
+"\n"
+msgstr ""
+
+#: stumble.php:688
+msgid ""
+"You have also been automatically joined up to the Stumble! for Wordpress network which will send stumblers to your blog. Please make sure you set your site's category from the settings page.\n"
+"\n"
+msgstr ""
+
+#: stumble.php:693
+msgid "You are *not* currently using the Stumble! for WordPress network to allow readers from other blogs to stumble through your posts. Joining the network will help increase the number of pageviews your blog receives, and ultimately leads to more subscribers.\n"
+msgstr ""
+
+#: stumble.php:694
+msgid ""
+"The network is totally free, and you can easily join from the plugin's option page.\n"
+"\n"
+msgstr ""
+
+#: stumble.php:698
+msgid ""
+"If you require any help in setting up the plugin, or have any suggestion or question, just leave a comment at Infinity-Infinity.com forums: http://infinity-infinity.com/forums/forum/4\n"
+"\n"
+msgstr ""
+
+#: stumble.php:700
+msgid ""
+"Thank you for using the plugin,\n"
+"Brendon Boshell\n"
+"\n"
+"http://www.infinity-infinity.com/\n"
+"\n"
+msgstr ""
+
+#: stumble.php:702
+msgid "(Sent via your WordPress blog)"
+msgstr ""
+
+#: stumble.php:704
+msgid "Stumble! for WordPress upgraded"
+msgstr ""
+
+#: stumble.php:704
+msgid "Stumble! for WordPress installed"
+msgstr ""
+
+#: stumble.php:887
+msgid "Liked this article? Read another similar article."
+msgstr ""
+
